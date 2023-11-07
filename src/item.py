@@ -1,3 +1,5 @@
+from csv import DictReader
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -28,6 +30,17 @@ class Item:
             self._name = new_name[:10]
         else:
             self._name = new_name
+
+    @classmethod
+    def instantiate_from_csv(cls, path):
+        with open(path) as file:
+            reader = DictReader(file)
+            for row in reader:
+                cls(row['name'], row['price'], row['quantity'])
+
+    @staticmethod
+    def string_to_number(string:str):
+        return int(float(string))
 
     def calculate_total_price(self) -> float:
         """
