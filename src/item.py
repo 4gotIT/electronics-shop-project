@@ -33,10 +33,14 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls, path: str):
-        with open(path) as file:
-            reader = DictReader(file)
-            for row in reader:
-                cls(row['name'], row['price'], row['quantity'])
+        try:
+            with open(path) as file:
+                reader = DictReader(file)
+                for row in reader:
+                    cls(row['name'], row['price'], row['quantity'])
+        except FileNotFoundError as ex:
+            raise 'Отсутствует файл item.csv'
+        # except Instantiate
 
     @staticmethod
     def string_to_number(string: str):
