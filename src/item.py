@@ -56,12 +56,14 @@ class Item:
         """
         self.price *= self.pay_rate
 
+    def __add__(self, other):
+        if isinstance(other, Item):
+            return self.quantity + other.quantity
+        raise TypeError(f'Нельзя сложить экземпляр {self.__class__} с другим объектом')
+
     def __repr__(self):
-        return f'Item({self._name}, {self.price}, {self.quantity})'
+        return f'{self.__class__.__name__}({self._name}, {self.price}, {self.quantity})'
 
     def __str__(self):
         return f'{self._name}'
 
-
-item1 = Item("Смартфон", 10000, 20)
-print(str(item1))
