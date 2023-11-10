@@ -25,21 +25,21 @@ class Item:
         return self._name
 
     @name.setter
-    def name(self, new_name):
+    def name(self, new_name: str):
         if len(new_name) > 10:
             self._name = new_name[:10]
         else:
             self._name = new_name
 
     @classmethod
-    def instantiate_from_csv(cls, path):
+    def instantiate_from_csv(cls, path: str):
         with open(path) as file:
             reader = DictReader(file)
             for row in reader:
                 cls(row['name'], row['price'], row['quantity'])
 
     @staticmethod
-    def string_to_number(string:str):
+    def string_to_number(string: str):
         return int(float(string))
 
     def calculate_total_price(self) -> float:
@@ -56,7 +56,7 @@ class Item:
         """
         self.price *= self.pay_rate
 
-    def __add__(self, other):
+    def __add__(self, other: object):
         if isinstance(other, Item):
             return self.quantity + other.quantity
         raise TypeError(f'Нельзя сложить экземпляр {self.__class__} с другим объектом')
