@@ -36,6 +36,7 @@ class Item:
         try:
             with open(path) as file:
                 reader = DictReader(file)
+                Item.all = []
                 for row in reader:
                     cls(row['name'], row['price'], row['quantity'])
         except FileNotFoundError as ex:
