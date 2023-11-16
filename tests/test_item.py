@@ -39,5 +39,5 @@ def test_sec_task():
 
 def test_third_task():
     item1 = Item("Смартфон", 10000, 20)
-    assert repr(item1) == "Item(Смартфон, 10000, 20)"
+    assert repr(item1) == "Item('Смартфон', 10000, 20)"
     assert str(item1) == 'Смартфон'
