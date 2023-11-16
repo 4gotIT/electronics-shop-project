@@ -39,8 +39,8 @@ class Item:
                 Item.all = []
                 for row in reader:
                     cls(row['name'], row['price'], row['quantity'])
-        except FileNotFoundError as ex:
-            raise 'Отсутствует файл item.csv'
+        except FileNotFoundError:
+            print('Отсутствует файл item.csv')
         # except Instantiate
 
     @staticmethod
@@ -67,7 +67,7 @@ class Item:
         raise TypeError(f'Нельзя сложить экземпляр {self.__class__} с другим объектом')
 
     def __repr__(self):
-        return f'{self.__class__.__name__}({self._name}, {self.price}, {self.quantity})'
+        return f"{self.__class__.__name__}('{self._name}', {self.price}, {self.quantity})
 
     def __str__(self):
         return f'{self._name}'
