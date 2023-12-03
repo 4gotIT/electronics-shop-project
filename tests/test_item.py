@@ -1,7 +1,6 @@
-from src.item import Item
+from src.item import Item, InstantiateCSVError
 import os
-
-
+import pytest
 
 
 def test_first_task_item():
@@ -41,3 +40,10 @@ def test_third_task():
     item1 = Item("Смартфон", 10000, 20)
     assert repr(item1) == "Item('Смартфон', 10000, 20)"
     assert str(item1) == 'Смартфон'
+
+def test_instantiate_from_csv():
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv()
+
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv()
