@@ -1,4 +1,9 @@
 from csv import DictReader
+import os
+
+class InstantiateCSVError(Exception):
+    def __str__(self):
+        return 'Файл item.csv поврежден'
 
 class Item:
     """
@@ -32,16 +37,19 @@ class Item:
             self._name = new_name
 
     @classmethod
-    def instantiate_from_csv(cls, path: str):
-        try:
-            with open(path) as file:
-                reader = DictReader(file)
-                Item.all = []
-                for row in reader:
-                    cls(row['name'], row['price'], row['quantity'])
-        except FileNotFoundError:
-            print('Отсутствует файл item.csv')
-        # except Instantiate
+    def instantiate_from_csv(cls, path='items.csv'):
+        # если файла по пути нет
+        if not os.path.isfile(path):
+            raise FileNotFoundError
+        with open(path) as file:
+            reader = DictReader(file)
+            # reader.fieldnames возвращает нам названия колонок, если их меньше 3 то ловим исключение
+            if len(reader.fieldnames) < 3:
+                raise InstantiateCSVError
+
+    @staticmethod
+    def check_csv_file():
+        pass
 
     @staticmethod
     def string_to_number(string: str):
@@ -72,3 +80,11 @@ class Item:
     def __str__(self):
         return f'{self._name}'
 
+
+if __name__ == '__main__':
+    try:
+        Item.instantiate_from_csv()
+    except FileNotFoundError as ex:
+        print(ex)
+    except InstantiateCSVError as ex:
+        print(ex)
